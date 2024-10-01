@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="26624e1d-2664-488a-a85c-62330ea39a1d" author="rtusan">
+
+        <createSequence cycle="false" dataType="bigint" incrementBy="1" minValue="1" sequenceName="book_id_seq" startValue="1"/>
+        <createTable tableName="book">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(500)"/>
+            <column name="author" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="publisher" type="VARCHAR(100)"/>
+        </createTable>
+
+        <createSequence cycle="false" dataType="bigint" incrementBy="1" minValue="1" sequenceName="customer_id_seq" startValue="1"/>
+        <createTable tableName="customer">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="VARCHAR(100)"/>
+            <column name="postal" type="VARCHAR(6)"/>
+            <column name="phone" type="VARCHAR(32)"/>
+            <column name="email" type="VARCHAR(128)"/>
+        </createTable>
+
+        <createSequence cycle="false" dataType="bigint" incrementBy="1" minValue="1" sequenceName="reservation_id_seq" startValue="1"/>
+        <createTable tableName="reservation">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="book" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="customer" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="res_start" type="date"/>
+            <column name="res_end" type="date"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="dd7e87b4-0e1f-4bef-b8fe-e95409b7fd6e" author="rtusan">
+        <sql>
+            INSERT INTO book VALUES (1, 'Gardening', 'Guide to make your garden cozier', 'Igor Hruška', 'IKAR');
+            INSERT INTO book VALUES (2, 'GameDev', 'Game development tutorials', 'Rado Tušan', 'IKAR');
+            INSERT INTO book VALUES (3, 'Rýchle šípy', null, 'Jaroslav Foglár', 'ČSSR');
+            INSERT INTO book VALUES (4, 'Šachy', null, 'Peťo šachmajster', null);
+            INSERT INTO book VALUES (5, 'Vývoj ľudstva', 'Antropologická kniha', 'Doktor Sova', 'IKAR');
+            SELECT setval('book_id_seq', 5);
+        </sql>
+
+        <sql>
+            INSERT INTO customer VALUES (1, 'František Feri', 'Zámocká 3, Košice', '04001', null, null);
+            INSERT INTO customer VALUES (2, 'Dávid Pinďo', 'Bernoláková 14, Košice', '04311', '+421668457323', null);
+            INSERT INTO customer VALUES (3, 'Mišo Fecenko', 'Humenská 5, Humenné', '66101', null, 'm.fecenko@gmail.com');
+            INSERT INTO customer VALUES (4, 'Ján Zemčák', 'Rudá 55, Rudník', '65438', null, null);
+            INSERT INTO customer VALUES (5, 'Anton Tono', 'Letná 4, Košice', '04001', '+421658333542', 'antono@gmail.com');
+            SELECT setval('customer_id_seq', 5);
+        </sql>
+
+        <sql>
+            INSERT INTO reservation VALUES (1, 2, 3, now(), now());
+            INSERT INTO reservation VALUES (2, 3, 2, now(), now());
+            INSERT INTO reservation VALUES (3, 4, 1, now(), now());
+            INSERT INTO reservation VALUES (4, 5, 5, now(), now());
+            SELECT setval('reservation_id_seq', 4);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

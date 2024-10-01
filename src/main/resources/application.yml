@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: LibraryManagerDemo
+    description: Sample project demonstrating Spring boot application with REST services using PosrgreSQL database.
+
+  datasource:
+    url: jdbc:postgresql://${DATABASE_HOST_PORT:localhost:5432}/${DATABASE_NAME:librarydemo}?currentSchema=${DATABASE_SCHEMA:public}
+    username: ${DATABASE_USER:user}
+    password: ${DATABASE_PASSWORD:3304}
+    driver-class-name: org.postgresql.Driver
+
+  jackson:
+    default-property-inclusion: non_null
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    open-in-view: true
+    show-sql: true
+
+  liquibase:
+    enabled: ${LIQUIBASE_ENABLED:true}
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    liquibase-schema: ${DATABASE_SCHEMA:public}
+
+server:
+  port: 8080
+  shutdown: graceful
+
+logging:
+  level:
+    org.hibernate: OFF
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+    resolve-schema-properties: true
+    groups:
+      enabled: true
+  swagger-ui:
+    enabled: true
+    operationsSorter: alpha
+    path: /swagger-ui
+    tags-sorter: alpha
+    display-operation-id: true
+    display-request-duration: true
+  writer-with-default-pretty-printer: true
