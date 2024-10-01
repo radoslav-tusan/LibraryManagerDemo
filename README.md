@@ -1,5 +1,3 @@
-### LibraryManagerDemo
-
 # Simple spring boot project that demonstrates library management.
 
 # I used:
@@ -14,6 +12,7 @@
 * Mapstruct
 * Swagger
 * JUnit
+* Google formatter
 * (see pom)
 
 # Radoslav Tušan (radoslav.tusan@gmail.com)
